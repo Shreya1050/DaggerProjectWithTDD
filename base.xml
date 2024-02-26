@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!DOCTYPE properties SYSTEM 'http://java.sun.com/dtd/properties.dtd'>
+
+<properties>
+
+    <entry key="settings.db.name">commonsettings</entry>
+    <entry key="settings.db.host">mongo-registry.databases</entry>
+    <entry key="settings.db.port">27017</entry>
+<!--    <entry key="settings.collection.name">settings</entry>-->
+
+    <entry key="settings.manager.app.ip">http://0.0.0.0</entry>
+    <entry key="settings.manager.app.port">2131</entry>
+
+<!--    <entry key="settings.topic.name">commonsettings</entry>-->
+
+
+</properties>

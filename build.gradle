@@ -1,0 +1,172 @@
+
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    repositories {
+        mavenCentral()
+        maven { url = uri('https://plugins.gradle.org/m2/') }
+    }
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
+    }
+}
+
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.6.10'
+    id 'org.jetbrains.kotlin.kapt' version '1.6.10'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'src/main/java', 'src/main/java/com/fretron/terminalmanager/exception'
+        }
+    }
+}
+
+
+group 'com.fretron'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 11
+targetCompatibility = 11
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+}
+
+
+ext {
+    jettyVersion = '9.2.12.v20150709'
+    jerseyVersion = '2.19'
+    kafkaVersion = '3.3.1'
+    confluentVersion = '4.0.0'
+    daggerVersion = "2.16"
+    jacksonVersion = '2.5.3'
+}
+
+
+repositories {
+    maven { url "https://packages.confluent.io/maven/" }
+    maven { url "https://repo.maven.apache.org/maven2" }
+    maven { url "https://repository.aspose.com/repo/" }
+
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+
+    //reading document files
+    implementation 'org.apache.poi:poi-ooxml:5.1.0'
+
+    implementation("io.opentelemetry:opentelemetry-api:1.32.0");
+    implementation("io.opentelemetry:opentelemetry-sdk:1.32.0");
+    implementation("io.opentelemetry:opentelemetry-sdk-metrics:1.32.0");
+    implementation("io.opentelemetry:opentelemetry-exporter-logging:1.32.0");
+    implementation("io.opentelemetry.semconv:opentelemetry-semconv:1.23.1-alpha")
+    implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.32.0");
+    implementation("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure-spi:1.32.0");
+//    implementation("com.google.cloud.opentelemetry:exporter-auto:0.25.2-alpha:shaded")
+    implementation("com.google.cloud.opentelemetry:exporter-trace:0.20.0");
+    implementation 'org.apache.poi:poi-ooxml:5.2.4'
+//    testImplementation 'org.simpleflatmapper:sfm-test:1.11b1'
+    implementation 'org.simpleflatmapper:sfm-csv:7.0.0'
+
+//    api group: 'org.mongodb', name: 'mongo-java-driver', version: '3.9.0'
+    api group: 'org.mongodb', name: 'mongodb-driver-sync' ,version: '4.7.0'
+
+    api "org.apache.kafka:kafka-clients:$kafkaVersion"
+    api "io.confluent:kafka-avro-serializer:$confluentVersion"
+    api "org.apache.kafka:kafka-streams:$kafkaVersion"
+    api "io.confluent:kafka-schema-registry:$confluentVersion"
+
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    api group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
+
+    api "org.json:json:20211205"
+    api group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
+    api group: 'junit', name: 'junit', version: '4.12'
+//    api "com.google.code.gson:gson:2.8.5"
+
+    api group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: jerseyVersion
+    api group: 'org.eclipse.jetty', name: 'jetty-servlet', version: jettyVersion
+    api group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version: jerseyVersion
+    api group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: jerseyVersion
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: jacksonVersion
+    api group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: jacksonVersion
+    api group: 'junit', name: 'junit', version: '4.12'
+    api "org.glassfish.jersey.containers:jersey-container-grizzly2-http:$jerseyVersion"
+    api group: 'org.glassfish.jersey.media', name: 'jersey-media-multipart', version:'2.19'
+
+    // Dependency Injection
+    api "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+
+    // Common Module
+//    api project(':Common')
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    testImplementation "org.assertj:assertj-core:3.3.0"
+    testImplementation group: 'org.apache.kafka', name: 'kafka-streams', version: kafkaVersion, classifier: 'test'
+    testImplementation group: 'org.apache.kafka', name: 'kafka-clients', version: kafkaVersion, classifier: 'test'
+    testImplementation group: 'org.apache.kafka', name: 'kafka_2.11', version: '1.0.0', classifier: 'test'
+    testImplementation "org.json:json:20170516"
+    testImplementation group: 'org.apache.curator', name: 'curator-test', version: '4.0.0'
+    testImplementation "org.apache.curator:curator-test:2.9.0"
+    testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion, classifier: 'tests'
+    testImplementation group: 'io.confluent', name: 'kafka-schema-registry', version: confluentVersion
+    testImplementation group: "de.flapdoodle.embed", name: "de.flapdoodle.embed.mongo", version: "2.0.0"
+
+    testImplementation group: 'org.glassfish.jersey.test-framework', name: 'jersey-test-framework-core', version: jerseyVersion
+    testImplementation group: 'com.nhaarman', name: 'mockito-kotlin', version: '1.6.0'
+    testImplementation group: 'junit', name: 'junit', version:'4.12'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+    testImplementation 'org.mockito:mockito-core:1.6.0'
+
+
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.test-framework.providers/jersey-test-framework-provider-grizzly2
+    testImplementation group: 'org.glassfish.jersey.test-framework.providers', name: 'jersey-test-framework-provider-grizzly2', version: jerseyVersion
+
+    testImplementation group: 'org.apache.kafka', name: 'kafka-streams-test-utils', version: kafkaVersion
+
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    api group: 'commons-io', name: 'commons-io', version: '2.4'
+    api group: 'org.glassfish.grizzly', name: 'grizzly-http-servlet', version: '2.3.19'
+
+    //java-11 dependencies for local run setup
+    api group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+    api "javax.activation:javax.activation-api:1.2.0"
+    api('org.glassfish.jaxb:jaxb-runtime:2.3.0')
+
+
+    kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'FatJar Task',
+                'Implementation-Version': version,
+                'Main-Class': 'com.dbExpose.ApplicationKt'
+    }
+    archiveBaseName.set("${project.name}-beta-all")
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+    exclude('META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA')
+    duplicatesStrategy = 'INCLUDE'
+}
